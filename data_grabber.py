@@ -41,9 +41,9 @@ def request_api(timestamps):
     for i in range(len(timestamps[0])):
         start = timestamps[0][i]
         end = timestamps[1][i]
-
-    endpoint = endpoint_builder(start, end, node_name)
-    response = requests.get(endpoint)
+        endpoint = endpoint_builder(start, end, node_name)
+        response = requests.get(endpoint)
+        # TODO save responses to files
 
 def format_timestamps(timestamp):
     timestamp = timestamp.split('T')
@@ -76,11 +76,7 @@ def data_parser(json_path):
     return only_energy
 
 
-
-# compute_time_difference(format_timestamps("2023-12-25T20:52:24+01:00"), format_timestamps("2023-12-25T20:52:25+01:00"))   
-# format_timestamps("2023-12-25T20:52:24+01:00")
-# data_parser("metrics.json")
-# endpoint = endpoint_builder("2023-12-25T16:54", "2023-12-25T16:56", "orion-1")
-# print(endpoint)
 timestamps = timestamps_extractor("results.txt")
-print(timestamps)
+# call request_api to request the wattmeters' data
+# call data parser to get the energy values with logical timestamps
+# write func to make graphs
