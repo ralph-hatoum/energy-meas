@@ -17,7 +17,12 @@ def timestamps_extractor(file_path):
         lines = f.readlines()
 
     for k in range(len(lines)):
-        if lines[k][0] == 'S':
+        if lines[k][0] == "T":
+            split = lines[k].split(" ")
+            test_number = split[1]
+            message_size = split[10]
+            throughput = split[15]
+        elif lines[k][0] == 'S':
             start_time = lines[k][13:-1]
             timestamps[0].append(start_time)
         elif lines[k][0] == 'E':
