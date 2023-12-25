@@ -1,0 +1,49 @@
+Test #0 : throughput 1 messages per second, message size 1000 bytes ; equivalent throughput 0 Mb/s
+Will send data at throughput 1000 bytes per second
+Start time : 2023-12-25 16:54:59.825410
+End time : 2023-12-25 16:59:59.825410
+
+Test #1 : throughput 1 messages per second, message size 1000000 bytes ; equivalent throughput 1 Mb/s
+Will send data at throughput 1000000 bytes per second
+Start time : 2023-12-25 17:00:00.265617
+End time : 2023-12-25 17:05:00.265617
+
+Test #2 : throughput 1 messages per second, message size 10000000 bytes ; equivalent throughput 10 Mb/s
+Will send data at throughput 10000000 bytes per second
+Start time : 2023-12-25 17:05:00.881379
+End time : 2023-12-25 17:10:00.881379
+
+Test #3 : throughput 10 messages per second, message size 1000 bytes ; equivalent throughput 0 Mb/s
+Will send data at throughput 10000 bytes per second
+Start time : 2023-12-25 17:10:01.262863
+End time : 2023-12-25 17:15:01.262863
+
+Test #4 : throughput 10 messages per second, message size 1000000 bytes ; equivalent throughput 10 Mb/s
+Will send data at throughput 10000000 bytes per second
+Start time : 2023-12-25 17:15:01.288656
+End time : 2023-12-25 17:20:01.288656
+
+Test #5 : throughput 10 messages per second, message size 10000000 bytes ; equivalent throughput 100 Mb/s
+Will send data at throughput 100000000 bytes per second
+Start time : 2023-12-25 17:20:01.392345
+End time : 2023-12-25 17:25:01.392345
+
+Test #6 : throughput 100 messages per second, message size 1000 bytes ; equivalent throughput 0 Mb/s
+Will send data at throughput 100000 bytes per second
+Start time : 2023-12-25 17:25:01.436044
+End time : 2023-12-25 17:30:01.436044
+
+Test #7 : throughput 100 messages per second, message size 1000000 bytes ; equivalent throughput 100 Mb/s
+Will send data at throughput 100000000 bytes per second
+Start time : 2023-12-25 17:30:01.445998
+End time : 2023-12-25 17:35:01.445998
+
+Test #8 : throughput 100 messages per second, message size 10000000 bytes ; equivalent throughput 1000 Mb/s
+Will send data at throughput 1000000000 bytes per second
+Start time : 2023-12-25 17:35:01.453442
+End time : 2023-12-25 17:40:01.453442
+
+Test #9 : throughput 1000 messages per second, message size 1000 bytes ; equivalent throughput 1 Mb/s
+Will send data at throughput 1000000 bytes per second
+Start time : 2023-12-25 17:40:01.456723
+End time : 2023-12-25 17:45:01.456723
