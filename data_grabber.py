@@ -12,7 +12,7 @@ end_time = "2023-12-25T16:54:59.825410"
 request_to_make = f"https://api.grid5000.fr/stable/sites/lyon/metrics?nodes={node_name}&metrics=wattmetre_power_watt&start_time={start_time}&end_time={end_time}"
 
 def timestamps_extractor(file_path):
-    timestamps = [[],[]]
+    timestamps = [[],[],[]]
     with open(file_path, 'r') as f:
         lines = f.readlines()
 
@@ -22,6 +22,8 @@ def timestamps_extractor(file_path):
             test_number = split[1]
             message_size = split[10]
             throughput = split[15]
+            # print(test_number, message_size, throughput)
+            timestamps.append((test_number, message_size, throughput))
         elif lines[k][0] == 'S':
             start_time = lines[k][13:-1]
             timestamps[0].append(start_time)

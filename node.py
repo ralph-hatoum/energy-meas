@@ -41,7 +41,7 @@ def execute_tests(throughputs, message_sizes, test_length):
     for throughput in throughputs:
         for message_size in message_sizes :
             with open("results.txt", "a") as f:
-                f.write(f"Test #{test_counter} : {throughput} {message_size} {(throughput*message_size)//1000000}")
+                f.write(f"Test #{test_counter} : {throughput} {message_size} {(throughput*message_size)/1000000}")
             print(f"Test #{test_counter} : throughput {throughput} messages per second, message size {message_size} bytes ; equivalent throughput {(throughput*message_size)//1000000} Mb/s")
             result = data_sender(throughput, message_size, test_length)
             to_append=(test_counter, result[0],result[1])
