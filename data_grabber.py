@@ -16,12 +16,12 @@ def timestamps_extractor(file_path):
     with open(file_path, 'r') as f:
         lines = f.readlines()
 
-    for line in lines:
-        if line[0] == 'S':
-            start_time = line[13:-1]
+    for k in range(len(lines)):
+        if lines[k][0] == 'S':
+            start_time = lines[k][13:-1]
             timestamps[0].append(start_time)
-        elif line[0] == 'E':
-            end_time = line[11:-1]
+        elif lines[k][0] == 'E':
+            end_time = lines[k][11:-1]
             timestamps[1].append(end_time)
     
     return timestamps
@@ -45,19 +45,35 @@ def format_timestamps(timestamp):
     timestamp = timestamp[0]
     return timestamp
 
+def compute_time_difference(t1, t2):
+    t1 = t1.split(":")
+    t2 = t2.split(":")
+    t1, t2 = list(map(int, t1)), list(map(int, t2))
+    d1, d2, d3 = t2[0]-t1[0], t2[1]-t1[1], t2[2]-t1[2]
+
+    return d1+d2+d3
+
 def data_parser(json_path):
     with open(json_path) as f:
         data = json.load(f)
     only_energy = []
+    timestamp_origin = ""
     for metric in data:
         if metric['metric_id']=='wattmetre_power_watt':
-            timestamp = metric['timestamp']
+            if timestamp_origin == "":
+                timestamp_origin = format_timestamps(metric['timestamp'])
+            timestamp = format_timestamps(metric['timestamp'])
+            timestamp = compute_time_difference(timestamp_origin, timestamp)
             value = metric['value']
             only_energy.append((timestamp, value))
-    print(only_energy)
+    return only_energy
 
-        
-format_timestamps("2023-12-25T20:52:24+01:00")
+
+
+# compute_time_difference(format_timestamps("2023-12-25T20:52:24+01:00"), format_timestamps("2023-12-25T20:52:25+01:00"))   
+# format_timestamps("2023-12-25T20:52:24+01:00")
 # data_parser("metrics.json")
 # endpoint = endpoint_builder("2023-12-25T16:54", "2023-12-25T16:56", "orion-1")
 # print(endpoint)
+timestamps = timestamps_extractor("results.txt")
+print(timestamps)
