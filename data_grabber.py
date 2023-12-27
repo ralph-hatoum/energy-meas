@@ -53,10 +53,12 @@ def request_api(timestamps):
 
 def format_timestamps(timestamp):
     timestamp = timestamp.split(' ')
-    timestamp = timestamp[1]
-    timestamp = timestamp.split(":")
-    timestamp = timestamp[:-1]
-    timestamp = ":".join(timestamp)
+    date = timestamp[0]
+    time = timestamp[1]
+    time = time.split(":")
+    time = time[:-1]
+    time = ":".join(time)
+    timestamp = date+"T"+time
     print(timestamp)
     return timestamp
 
