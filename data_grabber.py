@@ -1,5 +1,7 @@
 import requests
 import json
+import matplotlib.pyplot as plt
+
 
 sample_request = "https://api.grid5000.fr/stable/sites/lyon/metrics?nodes=taurus-1,taurus-3&metrics=wattmetre_power_watt&start_time=2021-03-21T10:35&end_time=2021-03-21T10:40"
 
@@ -38,6 +40,7 @@ def endpoint_builder(start, end, node_name):
 
 
 def request_api(timestamps):
+    file_names = []
     for i in range(len(timestamps[0])):
         start = timestamps[0][i]
         end = timestamps[1][i]
@@ -46,12 +49,15 @@ def request_api(timestamps):
         end = format_timestamps(end)
         endpoint = endpoint_builder(start, end, node_name)
         print(endpoint)
-        # response = requests.get(endpoint)
+        response = requests.get(endpoint)
         # print(response)
-        # with open(f"test_{i}_results.json","w") as f:
-        #     f.write(response.text)
+        file_names.append(f"test_{i}_results.json")
+        with open(f"test_{i}_results.json","w") as f:
+            f.write(response.text)
+    return file_names
 
 def format_timestamps(timestamp):
+    print(timestamp)
     timestamp = timestamp.split(' ')
     date = timestamp[0]
     time = timestamp[1]
@@ -70,6 +76,13 @@ def compute_time_difference(t1, t2):
 
     return d1+d2+d3
 
+def format_timestamps_dataparser(timestamp):
+    timestamp = timestamp.split("T")
+    timestamp = timestamp[1]
+    timestamp = timestamp.split("+")
+    timestamp = timestamp[0]
+    return timestamp
+
 def data_parser(json_path):
     with open(json_path) as f:
         data = json.load(f)
@@ -78,16 +91,32 @@ def data_parser(json_path):
     for metric in data:
         if metric['metric_id']=='wattmetre_power_watt':
             if timestamp_origin == "":
-                timestamp_origin = format_timestamps(metric['timestamp'])
-            timestamp = format_timestamps(metric['timestamp'])
+                timestamp_origin = format_timestamps_dataparser(metric['timestamp'])
+            # print(metric['timestamp'])
+            timestamp = format_timestamps_dataparser(metric['timestamp'])
             timestamp = compute_time_difference(timestamp_origin, timestamp)
             value = metric['value']
             only_energy.append((timestamp, value))
     return only_energy
 
+def build_graphs(files):
+    # print(files)
+    for file in files:
+        # print(file)
+        data = data_parser(file)
+        X = []
+        Y = []
+        for element in data:
+            X.append(element[0])
+            Y.append(element[1])
+        plt.plot(X,Y,"x")
+        plt.xlabel('Time elapsed in seconds')
+        plt.ylabel('Power consumption in Watts')
+        plt.title('Power consumption during test')
+        plt.savefig(file+".png")
+        
 
 timestamps = timestamps_extractor("results.txt")
-request_api(timestamps)
-# call request_api to request the wattmeters' data
-# call data parser to get the energy values with logical timestamps
-# write func to make graphs
+json_names = request_api(timestamps)
+build_graphs(json_names)
+
