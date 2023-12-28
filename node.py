@@ -7,7 +7,7 @@ message_size = 1 # in bytes
 
 test_length = 0.5 # test length in minutes
 
-throughputs = [1, 10, 100, 1000]
+throughputs = [0, 1, 10, 100, 1000]
 
 message_sizes = [1000, 1000000, 10000000]
 
@@ -24,13 +24,16 @@ def data_sender(throughput, message_size, test_length):
     print(f"Start time : {start_time}")
     print(f"End time : {end_time}")
 
-    while datetime.now() < end_time : 
-        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client_socket.connect(('localhost', 8080))
-        data_to_send = "Sample data"
-        client_socket.send(data_to_send.encode())
-        client_socket.close()
-        time.sleep(1/throughput)
+    if throughput > 0: 
+        while datetime.now() < end_time : 
+            client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            client_socket.connect(('localhost', 8080))
+            data_to_send = "Sample data"
+            client_socket.send(data_to_send.encode())
+            client_socket.close()
+            time.sleep(1/throughput)
+    else :
+        time.sleep(test_length*60)
 
     return ({start_time},{end_time})
 

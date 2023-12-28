@@ -25,7 +25,7 @@ def timestamps_extractor(file_path):
             message_size = split[10]
             throughput = split[15]
             # print(test_number, message_size, throughput)
-            timestamps.append((test_number, message_size, throughput))
+            timestamps[2].append((test_number, message_size, throughput))
         elif lines[k][0] == 'S':
             start_time = lines[k][13:-1]
             timestamps[0].append(start_time)
@@ -99,24 +99,27 @@ def data_parser(json_path):
             only_energy.append((timestamp, value))
     return only_energy
 
-def build_graphs(files):
+def build_graphs(files, timestamps):
     # print(files)
-    for file in files:
+    test_info = timestamps[2]
+    for k in range(len(files)):
         # print(file)
-        data = data_parser(file)
+        data = data_parser(files[k])
         X = []
         Y = []
         for element in data:
             X.append(element[0])
             Y.append(element[1])
+        plt.figure(figsize=(8, 6))
         plt.plot(X,Y,"x")
         plt.xlabel('Time elapsed in seconds')
         plt.ylabel('Power consumption in Watts')
-        plt.title('Power consumption during test')
-        plt.savefig(file+".png")
+        plt.title(f'Power consumption during test {test_info[k][0]}, message size {test_info[k][1]}, equivalent throughput {int(test_info[k][1])*int(test_info[k][2])}')
+        plt.savefig(files[k]+".png")
         
 
 timestamps = timestamps_extractor("results.txt")
-json_names = request_api(timestamps)
-build_graphs(json_names)
+print(timestamps)
+# json_names = request_api(timestamps)
+build_graphs(["metrics.json"], timestamps)
 
