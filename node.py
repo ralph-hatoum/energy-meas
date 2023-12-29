@@ -14,7 +14,7 @@ message_size = 1 # in bytes
 
 test_length = 0.01 # test length in minutes ; needs to be at least a minute long as the metrics API does not distinguish between two different minutes in the endpoint to hit
 
-throughputs = [1, 10, 100, 1000]
+throughputs = [0, 1, 10, 100, 1000]
 
 message_sizes = [1000, 1000000, 10000000]
 
