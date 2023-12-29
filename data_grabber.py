@@ -13,7 +13,7 @@ end_time = "2023-12-25T16:54:59.825410"
 
 request_to_make = f"https://api.grid5000.fr/stable/sites/lyon/metrics?nodes={node_name}&metrics=wattmetre_power_watt&start_time={start_time}&end_time={end_time}"
 
-def timestamps_extractor(file_path):
+def timestamps_extractor(file_path: str) -> list:
     timestamps = [[],[],[]]
     with open(file_path, 'r') as f:
         lines = f.readlines()
@@ -36,11 +36,11 @@ def timestamps_extractor(file_path):
     
     return timestamps
 
-def endpoint_builder(start, end, node_name):
+def endpoint_builder(start: str, end: str, node_name: str) -> str:
     return f"https://api.grid5000.fr/stable/sites/lyon/metrics?nodes={node_name}&metrics=wattmetre_power_watt&start_time={start}&end_time={end}"
 
 
-def request_api(timestamps):
+def request_api(timestamps: list) -> list:
     file_names = []
     for i in range(len(timestamps[0])):
         start = timestamps[0][i]
@@ -57,7 +57,7 @@ def request_api(timestamps):
             f.write(response.text)
     return file_names
 
-def format_timestamps(timestamp):
+def format_timestamps(timestamp: str) -> str:
     print(timestamp)
     timestamp = timestamp.split(' ')
     date = timestamp[0]
@@ -69,7 +69,7 @@ def format_timestamps(timestamp):
     print(timestamp)
     return timestamp
 
-def compute_time_difference(t1, t2):
+def compute_time_difference(t1: str, t2: str) -> int:
     t1 = t1.split(":")
     t2 = t2.split(":")
     t1, t2 = list(map(int, t1)), list(map(int, t2))
@@ -77,14 +77,14 @@ def compute_time_difference(t1, t2):
 
     return d1+d2+d3
 
-def format_timestamps_dataparser(timestamp):
+def format_timestamps_dataparser(timestamp: str) -> str:
     timestamp = timestamp.split("T")
     timestamp = timestamp[1]
     timestamp = timestamp.split("+")
     timestamp = timestamp[0]
     return timestamp
 
-def data_parser(json_path):
+def data_parser(json_path: str) -> list:
     with open(json_path) as f:
         data = json.load(f)
     only_energy = []
@@ -100,7 +100,7 @@ def data_parser(json_path):
             only_energy.append((timestamp, value))
     return only_energy
 
-def build_graphs(files, timestamps):
+def build_graphs(files: list, timestamps: list):
     # print(files)
     test_info = timestamps[2]
     for k in range(len(files)):
