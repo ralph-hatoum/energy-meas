@@ -1,9 +1,16 @@
 import socket
+import sys
+
+if len(sys.argv)!=2:
+    print("missing arguments ; should provide IP address of server")
+    exit(-1)
+
+IP_address = sys.argv[1]
 
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 port = 8080
-server_socket.bind(('localhost', port))
+server_socket.bind((IP_address, port))
 
 server_socket.listen(5)
 
