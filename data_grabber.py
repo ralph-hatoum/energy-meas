@@ -21,9 +21,10 @@ def timestamps_extractor(file_path):
     for k in range(len(lines)):
         if lines[k][0] == "T":
             split = lines[k].split(" ")
+            # print(split)
             test_number = split[1]
-            message_size = split[10]
-            throughput = split[15]
+            message_size = split[4]
+            throughput = split[5]
             # print(test_number, message_size, throughput)
             timestamps[2].append((test_number, message_size, throughput))
         elif lines[k][0] == 'S':
@@ -49,11 +50,11 @@ def request_api(timestamps):
         end = format_timestamps(end)
         endpoint = endpoint_builder(start, end, node_name)
         print(endpoint)
-        response = requests.get(endpoint)
+        # response = requests.get(endpoint)
         # print(response)
-        file_names.append(f"test_{i}_results.json")
-        with open(f"test_{i}_results.json","w") as f:
-            f.write(response.text)
+        # file_names.append(f"test_{i}_results.json")
+        # with open(f"test_{i}_results.json","w") as f:
+            # f.write(response.text)
     return file_names
 
 def format_timestamps(timestamp):
@@ -120,6 +121,6 @@ def build_graphs(files, timestamps):
 
 timestamps = timestamps_extractor("results.txt")
 print(timestamps)
-# json_names = request_api(timestamps)
-build_graphs(["metrics.json"], timestamps)
+json_names = request_api(timestamps)
+# build_graphs(["metrics.json"], timestamps)
 

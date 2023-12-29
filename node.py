@@ -5,7 +5,7 @@ throughput = 10 # in messages per second
 
 message_size = 1 # in bytes
 
-test_length = 0.01 # test length in minutes
+test_length = 0.01 # test length in minutes ; needs to be at least a minute long as the metrics API does not distinguish between two different minutes in the endpoint to hit
 
 throughputs = [1, 10, 100, 1000]
 
@@ -51,12 +51,11 @@ def execute_tests(throughputs, message_sizes, test_length):
                 to_append=(test_counter, start_formatted,end_formatted)
                 with open("results.txt", "a") as f:
                     f.write(f"Test #{test_counter} : {throughput} {message_size} {(throughput*message_size)/1000000} \n")
-                    f.write(str(start_formatted)+'\n')
-                    f.write(str(end_formatted)+'\n')
+                    f.write(f"Start time : {start_formatted} \n")
+                    f.write(f"End time : {end_formatted} \n")
                     f.write('\n')
                 results.append(result)
                 test_counter+=1
-    print(results)
     return results
 
 execute_tests(throughputs, message_sizes, test_length)
