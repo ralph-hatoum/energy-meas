@@ -5,7 +5,7 @@ throughput = 10 # in messages per second
 
 message_size = 1 # in bytes
 
-test_length = 0.5 # test length in minutes
+test_length = 0.01 # test length in minutes
 
 throughputs = [1, 10, 100, 1000]
 
@@ -35,7 +35,7 @@ def data_sender(throughput, message_size, test_length):
     else :
         time.sleep(test_length*60)
 
-    return ({start_time},{end_time})
+    return (start_time,end_time)
 
 
 def execute_tests(throughputs, message_sizes, test_length):
@@ -44,13 +44,15 @@ def execute_tests(throughputs, message_sizes, test_length):
     for throughput in throughputs:
         for message_size in message_sizes :
             if not(throughput == 0 and message_size != 1000):
-                with open("results.txt", "a") as f:
-                    f.write(f"Test #{test_counter} : {throughput} {message_size} {(throughput*message_size)/1000000}")
                 print(f"Test #{test_counter} : throughput {throughput} messages per second, message size {message_size} bytes ; equivalent throughput {(throughput*message_size)//1000000} Mb/s")
                 result = data_sender(throughput, message_size, test_length)
-                to_append=(test_counter, result[0],result[1])
+                start_formatted = result[0].strftime("%Y-%m-%d %H:%M:%S")
+                end_formatted = result[1].strftime("%Y-%m-%d %H:%M:%S")
+                to_append=(test_counter, start_formatted,end_formatted)
                 with open("results.txt", "a") as f:
-                    f.write('\n'+str(to_append)+'\n')
+                    f.write(f"Test #{test_counter} : {throughput} {message_size} {(throughput*message_size)/1000000} \n")
+                    f.write(str(start_formatted)+'\n')
+                    f.write(str(end_formatted)+'\n')
                     f.write('\n')
                 results.append(result)
                 test_counter+=1
