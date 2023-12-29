@@ -45,16 +45,16 @@ def request_api(timestamps):
     for i in range(len(timestamps[0])):
         start = timestamps[0][i]
         end = timestamps[1][i]
-        print(start,end)
+        # print(start,end)
         start = format_timestamps(start)
         end = format_timestamps(end)
         endpoint = endpoint_builder(start, end, node_name)
-        print(endpoint)
+        # print(endpoint)
         # response = requests.get(endpoint)
         # print(response)
-        # file_names.append(f"test_{i}_results.json")
-        # with open(f"test_{i}_results.json","w") as f:
-            # f.write(response.text)
+        file_names.append(f"test_{i}_results.json")
+        with open(f"test_{i}_results.json","w") as f:
+            f.write(response.text)
     return file_names
 
 def format_timestamps(timestamp):
