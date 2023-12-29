@@ -1,5 +1,12 @@
 import socket, time
 from datetime import datetime, timedelta
+import sys
+
+if len(sys.argv)!=2:
+    print("missing arguments - provide server address")
+    exit(-1)
+
+server_address = sys.argv[1]
 
 throughput = 10 # in messages per second
 
@@ -27,8 +34,8 @@ def data_sender(throughput, message_size, test_length):
     if throughput > 0: 
         while datetime.now() < end_time : 
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            client_socket.connect(('localhost', 8080))
-            data_to_send = "Sample data"
+            client_socket.connect((server_address, 8080))
+            data_to_send = message
             client_socket.send(data_to_send.encode())
             client_socket.close()
             time.sleep(1/throughput)
