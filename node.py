@@ -18,7 +18,7 @@ throughputs = [0, 1, 10, 100, 1000]
 
 message_sizes = [1000, 1000000, 10000000]
 
-def data_sender(throughput, message_size, test_length):
+def data_sender(throughput: int, message_size: int, test_length: int) -> tuple:
 
     message = message_size*"a"
 
@@ -45,7 +45,7 @@ def data_sender(throughput, message_size, test_length):
     return (start_time,end_time)
 
 
-def execute_tests(throughputs, message_sizes, test_length):
+def execute_tests(throughputs: list, message_sizes: list, test_length: int) -> list:
     test_counter = 0
     results = []
     for throughput in throughputs:
