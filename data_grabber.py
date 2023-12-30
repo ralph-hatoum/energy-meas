@@ -25,7 +25,7 @@ def timestamps_extractor(file_path: str) -> list:
             test_number = split[1]
             message_size = split[4]
             print(split[5][:-1])
-            throughput = int(float(split[5][:-1]))
+            throughput = float(split[5][:-1])
             # print(test_number, message_size, throughput)
             timestamps[2].append((test_number, message_size, throughput))
         elif lines[k][0] == 'S':
@@ -112,11 +112,15 @@ def build_graphs(files: list, timestamps: list):
         for element in data:
             X.append(element[0])
             Y.append(element[1])
-        plt.figure(figsize=(8, 6))
+        mean = sum(Y)/len(Y)
+        plt.figure(figsize=(9, 7))
         plt.plot(X,Y,"x")
+        plt.axhline(y=mean, color='r', linestyle='--', label=f'Highlight: mean value {mean}')
+        plt.legend()
         plt.xlabel('Time elapsed in seconds')
         plt.ylabel('Power consumption in Watts')
-        plt.title(f'Power consumption during test {test_info[k][0]}, message size {test_info[k][1]}, equivalent throughput {int(test_info[k][1])*int(test_info[k][2])}')
+        print(f"To compute  : {int(test_info[k][1])} and {test_info[k][2]}")
+        plt.title(f'Power consumption during test {test_info[k][0]}, message size {test_info[k][1]}, equivalent throughput {(float(test_info[k][1])*float(test_info[k][2]))/1000000} Mb/s')
         plt.savefig(files[k]+".png")
         
 

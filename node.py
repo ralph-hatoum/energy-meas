@@ -51,7 +51,7 @@ def execute_tests(throughputs: list, message_sizes: list, test_length: int) -> l
     for throughput in throughputs:
         for message_size in message_sizes :
             if not(throughput == 0 and message_size != 1000):
-                print(f"Test #{test_counter} : throughput {throughput} messages per second, message size {message_size} bytes ; equivalent throughput {(throughput*message_size)//1000000} Mb/s")
+                print(f"Test #{test_counter} : throughput {throughput} messages per second, message size {message_size} bytes ; equivalent throughput {(throughput*message_size)/1000000} Mb/s")
                 result = data_sender(throughput, message_size, test_length)
                 start_formatted = result[0].strftime("%Y-%m-%d %H:%M:%S")
                 end_formatted = result[1].strftime("%Y-%m-%d %H:%M:%S")
