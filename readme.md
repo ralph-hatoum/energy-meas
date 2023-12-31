@@ -24,8 +24,21 @@ On each test, we write down the times of start and end of our test. After all te
 
 ## Results
 
-![Energy consumption with no traffic](./graphs/test_O_results.json.png)
+Here are a few graphs (all graphs are in the graphs directory, and all raw measures in the results directory) : 
 
+![Energy consumption with no traffic](./graphs/test_0_results.json.png)
+
+![Energy consumption with no traffic](./graphs/test_2_results.json.png)
+
+![Energy consumption with no traffic](./graphs/test_5_results.json.png)
+
+
+There does not seem to be a spike in power consumption as traffic load increases.
+
+## To work on
+
+TODO explain why 5 minutes, why the throughputs
+There are mistakes in the graphs titles regarding the throughputs
 
 
 
